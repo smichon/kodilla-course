@@ -25,11 +25,7 @@ public class CalculateStatistics {
         postsQuantity = statistics.postsCount();
         commentsQuantity = statistics.commentsCount();
 
-        if (usersQuantity == 0 || postsQuantity == 0) {
-            postsPerUser = 0;
-            commentsPerUser = 0;
-            commentsPerPost = 0;
-        } else {
+        if (usersQuantity != 0 && postsQuantity != 0) {
             postsPerUser = (double) postsQuantity / usersQuantity;
             commentsPerUser = (double) commentsQuantity / usersQuantity;
             commentsPerPost = (double) commentsQuantity / postsQuantity;
