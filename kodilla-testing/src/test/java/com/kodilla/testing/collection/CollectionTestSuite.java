@@ -18,12 +18,14 @@ public class CollectionTestSuite {
     @Test
     public void testOddNumbersExterminatorEmptyList() {
         //Given
-        OddNumbersExterminator emptyList = new OddNumbersExterminator(new ArrayList<Integer>(Collections.EMPTY_LIST));
+        ArrayList<Integer> emptyArray = new ArrayList<>();
+
+        OddNumbersExterminator emptyList = new OddNumbersExterminator(emptyArray);
         //When
         System.out.println("Testing empty List");
         List<Integer> result = emptyList.exterminate();
         //Then
-        Assert.assertEquals(Collections.EMPTY_LIST, result);
+        Assert.assertEquals(emptyArray, result);
     }
     @Test
     public void testOddNumbersExterminatorNormalList() {
