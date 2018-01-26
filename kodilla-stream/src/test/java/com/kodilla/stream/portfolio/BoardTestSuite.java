@@ -149,13 +149,10 @@ public class BoardTestSuite {
         double averageDaysOfTasksInProgress = project.getTaskLists().stream()
                 .filter(inProgressTasks::contains)
                 .flatMap(tl -> tl.getTasks().stream())
-                .map(task -> task.getCreated())
-                .map(d->ChronoUnit.DAYS.between(d,LocalDate.now()))
-                .mapToDouble(v->v)
+                .mapToDouble(task -> ChronoUnit.DAYS.between(task.getCreated(), LocalDate.now()))
                 .average()
                 .getAsDouble();
         //Then
         Assert.assertEquals(10, averageDaysOfTasksInProgress, 0);
-
     }
 }
