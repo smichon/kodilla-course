@@ -1,25 +1,14 @@
 package com.kodilla.exception.test;
 
 public class FirstChallenge {
-    private int a;
-    private int b;
-    private double result;
+    private static double result;
 
     public double divide(double a, double b) throws ArithmeticException {
 
             if(b == 0){
-                try {
-                    result = a/b;
-                    throw new ArithmeticException();
-
-                } catch (ArithmeticException e){
-                    System.out.println("Division by 0 int type values can cause exception like this => " + e);
-                } finally {
-                    System.out.println("Double type values (!=0) can be divided by 0 and the result is (+/-)Infinity," +
-                            " but if You try 0 divide by 0, You wil get NaN");
-                }
+                throw new ArithmeticException();
             }
-            return result ;
+            return a / b;
     }
 
     /**
@@ -28,7 +17,14 @@ public class FirstChallenge {
      */
     public static void main(String[] args){
         FirstChallenge firstChallenge = new FirstChallenge();
-        double result = firstChallenge.divide(7,0);
-        System.out.println(result);
+        try {
+            result = firstChallenge.divide(8,0);
+
+        } catch (ArithmeticException e){
+            System.out.println("You have tried to divide by 0. \nDivision by 0 can cause exception like this => " + e);
+        } finally {
+            System.out.println("Calculation below is correct when second value is different from 0, (b!=0)");
+            System.out.println(result);
+        }
     }
 }
