@@ -18,7 +18,7 @@ public class FirstChallenge {
     public static void main(String[] args){
         FirstChallenge firstChallenge = new FirstChallenge();
         try {
-            result = firstChallenge.divide(8,0);
+            result = firstChallenge.divide(0,0);
 
         } catch (ArithmeticException e){
             System.out.println("You have tried to divide by 0. \nDivision by 0 can cause exception like this => " + e);
