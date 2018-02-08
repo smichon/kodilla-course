@@ -5,7 +5,7 @@ public class FoodOrderExecute {
         DataRetriever dataRetriever = new DataRetriever();
         ExtraFoodShop extraFoodShop = dataRetriever.retrieveExtraFoodShop();
 
-        OrderServiceProcessor orderServiceProcessor = new OrderServiceProcessor(extraFoodShop , new InformToConfirm());
+        OrderServiceProcessor orderServiceProcessor = new OrderServiceProcessor(new OrderServiceImpl() , new InformToConfirm());
         orderServiceProcessor.order(extraFoodShop);
     }
 }
