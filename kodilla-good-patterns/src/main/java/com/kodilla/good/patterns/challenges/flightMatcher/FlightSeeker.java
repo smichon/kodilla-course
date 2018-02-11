@@ -5,10 +5,10 @@ import java.util.stream.Collectors;
 
 public final class FlightSeeker {
 
-    FlightMap flightMap = new FlightMap();
-    List<String> flightFrom;
-    List<String> flightTo;
-    List<String> stopover;
+    private final FlightMap flightMap = new FlightMap();
+    private List<String> flightFrom;
+    private List<String> flightTo;
+    private List<String> stopover;
 
     public void flightFromCity(Flight flight) {
         System.out.println("Flights from "+ flight.getFrom() + " can be realized to:");
@@ -29,6 +29,8 @@ public final class FlightSeeker {
     }
 
     public void flightWithStopover(Flight flight) {
+        flightToCity(flight);
+        flightFromCity(flight);
         stopover = flightFrom.stream()
                 .filter(s->flightTo.contains(s))
                 .collect(Collectors.toList());
