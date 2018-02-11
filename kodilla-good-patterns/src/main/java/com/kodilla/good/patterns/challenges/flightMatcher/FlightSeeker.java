@@ -6,36 +6,34 @@ import java.util.stream.Collectors;
 public final class FlightSeeker {
 
     private final FlightMap flightMap = new FlightMap();
-    private List<String> flightFrom;
-    private List<String> flightTo;
-    private List<String> stopover;
 
-    public void flightFromCity(Flight flight) {
-        System.out.println("Flights from "+ flight.getFrom() + " can be realized to:");
-        flightFrom = flightMap.getConnectionsMap().entrySet().stream()
+    public List<String> flightFromCity(Flight flight) {
+        List flightFrom = flightMap.getConnectionsMap().entrySet().stream()
                 .filter(m -> m.getKey().equals(flight.getFrom()))
                 .flatMap(m->m.getValue().stream())
                 .collect(Collectors.toList());
-        System.out.println(flightFrom);
+        return flightFrom;
 
     }
-    public void flightToCity(Flight flight) {
-        System.out.println("\nFlights to " + flight.getTo() + " can be realized from:");
-        flightTo = flightMap.getConnectionsMap().entrySet().stream()
+    public List<String> flightToCity(Flight flight) {
+        List flightTo = flightMap.getConnectionsMap().entrySet().stream()
                 .filter(m -> m.getKey().equals(flight.getTo()))
                 .flatMap(m -> m.getValue().stream())
                 .collect(Collectors.toList());
-        System.out.println(flightTo);
+        return flightTo;
     }
 
-    public void flightWithStopover(Flight flight) {
-        flightToCity(flight);
-        flightFromCity(flight);
-        stopover = flightFrom.stream()
-                .filter(s->flightTo.contains(s))
+    public List<String> flightWithStopover(Flight flight) {
+        List stopover = flightFromCity(flight).stream()
+                .filter(s->flightToCity(flight).contains(s))
                 .collect(Collectors.toList());
 
-        if (flightFrom.contains(flight.getTo()) || flightTo.contains(flight.getFrom())) {
+        System.out.println("Flights from "+ flight.getFrom() + " can be realized to:");
+        System.out.println(flightFromCity(flight));
+        System.out.println("\nFlights to " + flight.getTo() + " can be realized from:");
+        System.out.println(flightToCity(flight));
+
+        if (flightFromCity(flight).contains(flight.getTo()) || flightToCity(flight).contains(flight.getFrom())) {
             System.out.println("\nFlights from " + flight.getFrom() + " to " + flight.getTo() +
                     " can be realized with no stopover");
         } else if (stopover != null) {
@@ -45,5 +43,6 @@ public final class FlightSeeker {
             System.out.println("\nSorry, we couldn't find any stopover for flight from " + flight.getFrom()
                     + " to " + flight.getTo());
         }
+        return stopover;
     }
 }
