@@ -1,45 +1,40 @@
 package com.kodilla.spring.portfolio;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class BoardConfig {
-    @Autowired
-    @Qualifier("toDoList")
-    TaskList toDoList;
 
-    @Autowired
-    @Qualifier("inProgressList")
-    TaskList inProgressList;
-
-    @Autowired
-    @Qualifier("doneList")
-    TaskList doneList;
 
     @Bean(name = "toDoList")
     @Scope("prototype")
     public TaskList getToDoList() {
-        return new TaskList();
+        TaskList toDoList = new TaskList();
+        toDoList.getTasks().add("Learn Git");
+        toDoList.getTasks().add("Write RPS game");
+        toDoList.getTasks().add("Read more about Spring");
+        return toDoList;
     }
 
     @Bean(name = "inProgressList")
     @Scope("prototype")
     public TaskList getInProgressList() {
-        return new TaskList();
+        TaskList inProgressList = new TaskList();
+        inProgressList.getTasks().add("Learning Spring");
+        inProgressList.getTasks().add("Design pattern learning");
+        inProgressList.getTasks().add("TaskBoard code refactor");
+        return inProgressList;
     }
 
     @Bean(name = "doneList")
     @Scope("prototype")
     public TaskList getDoneList() {
-        return new TaskList();
-    }
-
-    @Bean
-    public Board getBoard() {
-        return new Board(toDoList, inProgressList, doneList);
+        TaskList doneList = new TaskList();
+        doneList.getTasks().add("Exam written");
+        doneList.getTasks().add("Collections repeated");
+        doneList.getTasks().add("task 10.4 finished");
+        return doneList;
     }
 }
