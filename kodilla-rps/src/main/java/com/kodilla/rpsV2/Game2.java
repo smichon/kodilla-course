@@ -13,6 +13,8 @@ public final class Game2 {
     private  char compNumber;
     private  int userScore = 0;
     private  int compScore = 0;
+    private Figure2 userFigure;
+    private Figure2 compFigure;
     private  boolean end = false;
 
     private Game2() {
@@ -56,7 +58,7 @@ public final class Game2 {
         roundsNumber = scanner.nextInt();
 
         System.out.println("Game controls: Key 1 - 'ROCK', Key 2 - 'PAPER', Key 3 - 'SCISSORS', " +
-                "Key x - end game, Key n - new game");
+                "Key 4 - 'SPOCK', KEY 5 - 'LIZARD', Key x - end game, Key n - new game");
     }
 
     public void chooseNumbers() {
@@ -71,49 +73,31 @@ public final class Game2 {
         }
     }
 
-    public void singleRoundScore() throws NullPointerException {
-
-        Figure2 userFigure = new FigureFactory().figureFactory(userNumber);
-        Figure2 compFigure = new FigureFactory().figureFactory(compNumber);
+    public void createFigures(char userNumber, char compNumber) {
+        userFigure = new FigureFactory().figureFactory(userNumber);
+        compFigure = new FigureFactory().figureFactory(compNumber);
         System.out.println(username + " chose " + userFigure.getFigureName() +
                 " and Computer chose " + compFigure.getFigureName());
+    }
 
-        if (userNumber == compNumber) {
-            System.out.println("It's a draw");
-        } else if (userNumber == '1') {
-            if (compNumber == '2') {
-                System.out.println("Computer wins this round");
-                compScore++;
-            } else if (compNumber == '3') {
-                System.out.println(username + " wins this round");
-                userScore++;
-            }
-        }
-        else if (userNumber == '2') {
-            if (compNumber == '3') {
-                System.out.println("Computer wins this round");
-                compScore++;
-            } else if (compNumber == '1') {
-                System.out.println(username + " wins this round");
-                userScore++;
-            }
-        }
-        else if (userNumber == '3') {
-            if (compNumber == '1') {
-                System.out.println("Computer wins this round");
-                compScore++;
-            } else if (compNumber == '2') {
-                System.out.println(username + " wins this round");
-                userScore++;
-            }
+    public String singleRoundScore(Figure2 userFigure, Figure2 compFigure) {
+        if (userFigure.getFigureName().equals(compFigure.getFigureName())) {
+            return  "It's a draw";
+        } else if (userFigure.winsWith().contains(compFigure.getFigureName())) {
+            userScore++;
+            return username + " wins this round!";
+        } else {
+            compScore++;
+            return "Computer wins this round!";
         }
     }
 
-    public void allRoundsScore() throws NullPointerException {
+    public void allRoundsScore() {
         for (int i=1; i <= roundsNumber && i < 16; i++) {
             System.out.println("\nRound No. " + i);
             chooseNumbers();
-            singleRoundScore();
+            createFigures(userNumber, compNumber);
+            singleRoundScore(userFigure, compFigure);
             System.out.println("Score after " + i + " rounds: " + username + " - " +
                     userScore + ", Computer - " + compScore);
         }
@@ -141,18 +125,17 @@ public final class Game2 {
     }
 
     public void endGame() {
-
         System.out.println("Are You sure to end the game? y - yes, n - no");
         char endGame = scanner.next().charAt(0);
         switch (endGame) {
             case 'y': {
                 System.out.println("Closing the game...");
                 end = true;
+                System.exit(1);
                 break;
             }
             case 'n': {
-                intro();
-                allRoundsScore();
+                newGame();
                 break;
             }
             default:
@@ -171,6 +154,7 @@ public final class Game2 {
             }
             case 'n':
                 end = true;
+                endGame();
                 break;
             default:
                 break;

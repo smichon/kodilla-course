@@ -5,11 +5,7 @@ public class RpsRunner2 {
 
         while (!Game2.getInstance().isEnd()) {
             Game2.getInstance().intro();
-            try {
-                Game2.getInstance().allRoundsScore();
-            } catch (NullPointerException e) {
-                System.out.println("Problem with aborting method - " + e);
-            }
+            Game2.getInstance().allRoundsScore();
         }
     }
 }

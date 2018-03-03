@@ -20,6 +20,7 @@ public final class Paper2 implements Figure2 {
     @Override
     public List<String> winsWith() {
         winsWith.add(FigureFactory.ROCK);
+        winsWith.add(FigureFactory.SPOCK);
         return winsWith;
     }
 }

@@ -20,6 +20,7 @@ public final class Scissors2 implements Figure2 {
     @Override
     public List<String> winsWith() {
         winsWith.add(FigureFactory.PAPER);
+        winsWith.add(FigureFactory.LIZARD);
         return winsWith;
     }
 }
