@@ -108,9 +108,9 @@ public class CompanyDaoTestSuite {
 
         //Then
         Assert.assertEquals(1, findEmployee.size());
-        Assert.assertTrue(findEmployee.get(0).getLastname().contains("Kovalsky"));
+        Assert.assertTrue(findEmployee.get(0).getLastname().startsWith("Kova"));
         Assert.assertEquals(1, nameBeginning.size());
-        Assert.assertTrue(nameBeginning.get(0).getName().contains("Sof"));
+        Assert.assertTrue(nameBeginning.get(0).getName().startsWith("Sof"));
 
         //CleanUp
         try {
