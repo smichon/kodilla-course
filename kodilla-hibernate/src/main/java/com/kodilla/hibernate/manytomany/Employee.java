@@ -1,21 +1,34 @@
 package com.kodilla.hibernate.manytomany;
 
+import com.kodilla.hibernate.manytomany.facade.CompanyFacade;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@NamedQuery(
-        name = "Employee.retrieveEmployeeLastname",
-        query = "FROM Employee WHERE lastname = :LASTNAME"
-)
+@NamedQueries({
+        @NamedQuery(
+                name = "Employee.retrieveEmployeeLastname",
+                query = "FROM Employee WHERE lastname = :LASTNAME"
+        ),
+        @NamedQuery(
+                name = "Employee.findByLastnameContains",
+                query = "FROM Employee WHERE lastname LIKE(CONCAT('%', :LASTNAME, '%'))"
+        )
+})
 @Entity
 @Table(name = "EMPLOYEES")
+@Component
 public class Employee {
     private int id;
     private String firstname;
     private String lastname;
     private List<Company> companies = new ArrayList<>();
+    @Autowired
+    private CompanyFacade companyFacade;
 
     public Employee() {
     }
@@ -70,4 +83,5 @@ public class Employee {
     public void setCompanies(List<Company> companies) {
         this.companies = companies;
     }
+
 }
