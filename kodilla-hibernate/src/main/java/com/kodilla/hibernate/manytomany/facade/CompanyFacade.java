@@ -17,23 +17,30 @@ public final class CompanyFacade {
     private CompanyDao companyDao;
     @Autowired
     private EmployeeDao employeeDao;
-    @Autowired
-    private Company company;
-    @Autowired
-    private Employee employee;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(CompanyFacade.class);
+    private List<Company> foundCompany;
+    private List<Employee> foundEmployee;
+
+    public List<Company> getFoundCompany() {
+        return foundCompany;
+    }
+
+    public List<Employee> getFoundEmployee() {
+        return foundEmployee;
+    }
 
     public void findCompany(String name) throws SearchingException {
         if (employeeDao.count() < 1) {
             LOGGER.error(SearchingException.ERR_COMP_LIST_EMPTY);
             throw new SearchingException(SearchingException.ERR_COMP_LIST_EMPTY);
         }
-        List<Company> foundCompany = companyDao.findByNameContains(name);
+        foundCompany = companyDao.findByNameContains(name);
         if (foundCompany.isEmpty()) {
             LOGGER.error(SearchingException.ERR_COMP_NOT_FOUND);
             throw new SearchingException(SearchingException.ERR_COMP_NOT_FOUND);
         }
-        LOGGER.info("Companies founded: " + foundCompany);
+        LOGGER.info("Companies founded: " + foundCompany.stream().map(o -> o.getName()).reduce(" ", String::concat));
     }
 
     public void findEmployee(String lastname) throws SearchingException {
@@ -41,11 +48,12 @@ public final class CompanyFacade {
             LOGGER.error(SearchingException.ERR_EMPL_LIST_EMPTY);
             throw new SearchingException(SearchingException.ERR_EMPL_LIST_EMPTY);
         }
-        List<Employee> foundEmployee = employeeDao.findByLastnameContains(lastname);
+        foundEmployee = employeeDao.findByLastnameContains(lastname);
         if (foundEmployee.isEmpty()) {
             LOGGER.error(SearchingException.ERR_EMPL_NOT_FOUND);
             throw new SearchingException(SearchingException.ERR_EMPL_NOT_FOUND);
         }
-        LOGGER.info("Employees founded: " + foundEmployee);
+
+        LOGGER.info("Employees founded: " + foundEmployee.stream().map(o -> o.getLastname()).reduce(" ", String::concat));
     }
 }

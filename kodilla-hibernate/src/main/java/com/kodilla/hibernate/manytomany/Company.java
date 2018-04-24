@@ -1,7 +1,5 @@
 package com.kodilla.hibernate.manytomany;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -21,7 +19,6 @@ import java.util.List;
 })
 @Entity
 @Table(name = "COMPANIES")
-@Component
 public class Company {
     private int id;
     private String name;
@@ -63,5 +60,12 @@ public class Company {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "employees=" + employees +
+                '}';
     }
 }

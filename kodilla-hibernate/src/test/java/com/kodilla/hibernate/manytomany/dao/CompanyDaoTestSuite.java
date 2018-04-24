@@ -180,10 +180,8 @@ public class CompanyDaoTestSuite {
         }
 
         //Then
-        /*Assert.assertEquals(1, findEmployee.size());
-        Assert.assertTrue(findEmployee.get(0).getLastname().contains("Kovalsky"));
-        Assert.assertEquals(1, findCompany.size());
-        Assert.assertTrue(findCompany.get(0).getName().contains("Software"));*/
+        Assert.assertEquals(1, companyFacade.getFoundCompany().size());
+        Assert.assertEquals(1, companyFacade.getFoundEmployee().size());
 
         //CleanUp
         try {

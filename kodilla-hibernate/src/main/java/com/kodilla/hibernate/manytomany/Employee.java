@@ -21,7 +21,6 @@ import java.util.List;
 })
 @Entity
 @Table(name = "EMPLOYEES")
-@Component
 public class Employee {
     private int id;
     private String firstname;
@@ -84,4 +83,10 @@ public class Employee {
         this.companies = companies;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "companies=" + companies +
+                '}';
+    }
 }
